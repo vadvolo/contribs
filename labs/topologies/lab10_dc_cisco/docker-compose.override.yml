@@ -1,0 +1,50 @@
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/24
+        gateway: 172.20.0.1
+
+services:
+  netbox:
+    container_name: netbox
+    hostname: netbox
+    ports:
+      - 8000:8080
+    volumes:
+      - ../topologies/lab10_dc_cisco/src:/home/ubuntu/src
+
+  annet:
+    container_name: annet
+    hostname: annet
+    image: annet
+    # since netbox required a lot of resources, but the lab emulators required them too,
+    # to avoid issues that order was applied here and later
+    depends_on:
+      netbox:
+        condition: service_healthy
+    volumes:
+      - ../annet/config.yaml:/config.yaml
+      - ../topologies/lab10_dc_cisco/src/lab_generators:/lab_generators
+
+  dynamips-lab:
+    container_name: dynamips
+    hostname: dynamips
+    image: ubuntu:bionic
+    depends_on:
+      netbox:
+        condition: service_healthy
+    tty: true
+    volumes:
+      - ../topologies/lab10_dc_cisco/src:/home/ubuntu/
+      - ../vm_images:/home/ubuntu/vm_images
+    command: sh "/home/ubuntu/install.sh"
+    cap_add:
+          - net_admin
+          - net_raw
+          - sys_module
+    devices: [/dev/net/tun:/dev/net/tun]
+    networks:
+      - default
