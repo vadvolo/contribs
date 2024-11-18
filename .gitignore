@@ -8,8 +8,8 @@ labs/topologies/*/src/netbox_data
 
 labs/topologies/*/operational_configs/*
 !labs/topologies/*/operational_configs/.gitkeep
-vm_images
-!vm_images/.gitkeep
+labs/vm_images/*
+!labs/vm_images/.gitkeep
 
 .idea/
 __pycache__/
