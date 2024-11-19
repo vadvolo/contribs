@@ -29,9 +29,9 @@ Author:
 - Device mgmt addresses:
    | Router | MGMT |
    |:------:|:----|
-   | lab-r1 | `172.20.0.111` |
-   | lab-r2 | `172.20.0.112` |
-   | lab-r3 | `172.20.0.113` |
+   | lab-r1 | `172.20.0.101` |
+   | lab-r2 | `172.20.0.102` |
+   | lab-r3 | `172.20.0.103` |
 
 ### Preparation
 
