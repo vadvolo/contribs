@@ -23,10 +23,6 @@ generators:
     - /lab_generators/__init__.py
 
 storage:
-  default:
-    adapter: file
-    params:
-      path: /file_inventory.yaml
   netbox:
     adapter: netbox
     params:

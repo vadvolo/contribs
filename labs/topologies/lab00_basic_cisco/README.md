@@ -10,6 +10,7 @@ In this lab, you will gain hands-on experience in deploying simple network confi
 Author:
 
 - [Vadim Volovik](https://github.com/vadvolo)
+- [Marat Sibgatulin](https://github.com/eucariot)
 
 ### Objectives
 
@@ -54,9 +55,9 @@ Author:
 In this lab, generators are organized within the `./src/lab_generators` directory. The lab utilizes two specific generators:
 
 - Description generator  
-  In this generator, we employ a description pattern for device neighbors formatted as `to_<NEIGHBOR_NAME>_<NEIGHBOR_PORT>`. The device connection map is located in Netbox and is utilized by Annet.
+  In this generator, we use a description pattern for interfaces like this: `to_<NEIGHBOR_NAME>_<NEIGHBOR_PORT>`. The device connection map is located in Netbox and is utilized by Annet.
 
-- Mtu generator  
+- MTU generator  
   In this generator, we retrieve MTU information for interfaces from Netbox if it has been configured. If no specific MTU setting is provided, we use a default MTU value of 1500.
 
 [Interfaces generator src](./src/lab_generators/interfaces.py)
@@ -81,7 +82,7 @@ make lab00
 ```
 
 After this step you will be automatically logged in to annet container as a root. You can login manually by `docker exec -u root -t -i annet /bin/bash`.  
-Also 512 bit RSA keys will be generated and SSH enabled. It can take a while. After that annet can log in to device.
+Also, 512 bit RSA keys will be generated and SSH wiil be enabled. It can take a while. After that annet can log in to the device.
 
 
 **Step 3. Check Netbox**
@@ -326,7 +327,7 @@ Change the MTU value on [interface](http://localhost:8000/dcim/interfaces/8/) fr
 
 <img src="./images/mtu.png" width="500" alt="restore connection">
 
-Ceckout all commands: `gen`, `diff`, `patch`, `deploy` for lab-r2. You can directly run `deploy --no-ask-deploy` if you are brave enough.
+Check out all the commands: `gen`, `diff`, `patch`, `deploy` for lab-r2. You can directly run `deploy --no-ask-deploy` if you are brave enough.
 
 **Step 9. Change generator**
 
@@ -339,7 +340,7 @@ class IfaceDescriptions(PartialGenerator):
 + neighbor += f"to_{connection.device.name}"
 ```
 
-Ceckout all commands: `gen`, `diff`, `patch`, `deploy` for any router. You also can directly run `deploy`.
+Check out all the commands: `gen`, `diff`, `patch`, `deploy` for any router. You also can directly run `deploy`.
 
 **Step 10. After finishing the lab, stop it**
 

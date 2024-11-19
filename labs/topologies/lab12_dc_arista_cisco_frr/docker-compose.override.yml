@@ -124,7 +124,7 @@ services:
         condition: service_healthy
     volumes:
       - ../annet/config.yaml:/config.yaml
-      # lab 02 and lab03 uses the same lab_generators
+      # lab 11 and lab12 uses the same lab_generators
       - ../topologies/lab12_dc_arista_cisco_frr/src/lab_generators:/lab_generators
 
   ceos-spine-1:

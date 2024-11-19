@@ -1,4 +1,4 @@
-## Lab03. Multivendor lab
+## Lab12. DC Multivendor Lab
 
 ### Introduction
 
@@ -24,7 +24,7 @@ Author:
 4. Download the `cEOS64-lab-4.33.0F.tar.xz`
 5. Prepare docker image: `docker image import cEOS64-lab-4.33.0F.tar.xz arista-ceos:4.33.0F --platform linux/amd64`
 
-Now you're able to run Lab03.
+Now you're able to run Lab12.
 
 ### Environment
 
