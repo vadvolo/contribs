@@ -1,6 +1,5 @@
 from annet.mesh import GlobalOptions, MeshRulesRegistry
 
-
 registry = MeshRulesRegistry(match_short_name=True)
 
 

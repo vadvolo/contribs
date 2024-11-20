@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
-from annet.bgp_models import ASN
+from annet.bgp_models import ASN, Family
 from annet.mesh import MeshExecutor
 from annet.mesh.executor import MeshExecutionResult
 from annet.storage import Device
@@ -17,10 +17,12 @@ class BGPGroup:
     remote_as: int  # Assumed that ASN is an integer, update if required
     import_policy: str
     export_policy: str
+    soft_reconfiguration_inbound: bool
     send_community: bool = False
+    families: tuple[str, ...] = field(default_factory=tuple)
 
     # Define key fields as a class attribute
-    _key_fields = ("group_name", "import_policy", "export_policy", "send_community")
+    _key_fields = ("group_name", "import_policy", "export_policy", "send_community", "families", "soft_reconfiguration_inbound")
 
     def __eq__(self, other):
         """
@@ -82,7 +84,9 @@ def bgp_groups(mesh_data: MeshExecutionResult) -> list[BGPGroup]:
             remote_as=peer.remote_as,
             import_policy=peer.import_policy,
             export_policy=peer.export_policy,
+            soft_reconfiguration_inbound=peer.options.soft_reconfiguration_inbound,
             send_community=peer.options.send_community,
+            families=tuple(peer.families),
         ))
     return list(groups)
 

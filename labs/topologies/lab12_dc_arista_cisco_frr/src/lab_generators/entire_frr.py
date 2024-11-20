@@ -5,14 +5,9 @@ from annet.generators import Entire
 from annet.mesh.executor import MeshExecutionResult
 from annet.storage import Device
 
-from .helpers.router import (
-    AutonomusSystemIsNotDefined,
-    bgp_asnum,
-    bgp_groups,
-    bgp_mesh,
-    is_drained_device,
-    router_id,
-)
+from .helpers.router import (AutonomusSystemIsNotDefined, bgp_asnum,
+                             bgp_groups, bgp_mesh, is_drained_device,
+                             router_id)
 
 
 class Frr(Entire):
@@ -51,12 +46,17 @@ class Frr(Entire):
 
             if description:
                 yield " description", description
+
+            # structure of ip addresses looks like:
+            #  ip_addresses=[
+            #       IpAddress(family=IpFamily(value=4,label='IPv4'),address='10.0.0.1/32'),
+            #       IpAddress(family=IpFamily(value=6,label='IPv6'),address='2001:db8::1/128')
+            #  ],
             if interface.ip_addresses:
                 for ip in interface.ip_addresses:
                     if ip.family.value == 4:
                         yield " ip address", ip.address
-                    if ip.family.value == 6:
-                        yield " ipv6 address", ip.address
+
             yield "exit"
             yield ""
 
@@ -85,8 +85,9 @@ class Frr(Entire):
                     yield "  redistribute", redistribute.protocol, "" if not redistribute.policy else f"route-map {redistribute.policy}"
 
             for group in bgp_groups(mesh_data):
-                yield "  neighbor", group.group_name, "route-map", group.import_policy, "in"
-                yield "  neighbor", group.group_name, "route-map", group.export_policy, "out"
+                if "ipv4_unicast" in group.families:
+                    yield "  neighbor", group.group_name, "route-map", group.import_policy, "in"
+                    yield "  neighbor", group.group_name, "route-map", group.export_policy, "out"
 
             if device.device_role.name == "ToR":
                 yield "  maximum-paths 16"

@@ -25,6 +25,7 @@ ip domain name nh.com
 no ip domain lookup
 !
 !
+ipv6 unicast-routing
 !
 !
 !
