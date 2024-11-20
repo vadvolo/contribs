@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
-from annet.bgp_models import ASN, Family
+from annet.bgp_models import ASN
 from annet.mesh import MeshExecutor
 from annet.mesh.executor import MeshExecutionResult
 from annet.storage import Device

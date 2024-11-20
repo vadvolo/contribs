@@ -60,7 +60,6 @@ class IpAddresses(PartialGenerator):
                 #       IpAddress(family=IpFamily(value=6,label='IPv6'),address='2001:db8::1/128')
                 #  ],
                 with self.block(f"interface {interface.name}"):
-                    ip_addr_set: set[tuple[str, int]] = set()
                     for ip_address in interface.ip_addresses:
                         if ip_address.family.value == 4:
                             yield "ip address", ip_address.address

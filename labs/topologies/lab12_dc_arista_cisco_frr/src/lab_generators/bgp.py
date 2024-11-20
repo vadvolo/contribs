@@ -117,5 +117,5 @@ class Bgp(PartialGenerator):
 
             with self.block("address-family ipv4"):
                 for group in bgp_groups(mesh_data):
-                    if "ipv4_unicast" in peer.families:
+                    if "ipv4_unicast" in group.families:
                         yield "neighbor", group.group_name, "activate"
