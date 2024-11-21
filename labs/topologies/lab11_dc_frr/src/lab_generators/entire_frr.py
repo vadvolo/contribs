@@ -32,6 +32,7 @@ class Frr(Entire):
         return "sudo /etc/init.d/frr reload"
 
     def run(self, device: Device):
+        """Generate configuration file content"""
 
         mesh_data: MeshExecutionResult = bgp_mesh(device)
 
