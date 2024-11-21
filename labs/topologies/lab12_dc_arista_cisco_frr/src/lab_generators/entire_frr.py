@@ -21,12 +21,14 @@ class Frr(Entire):
     TAGS = ["frr"]
 
     def path(self, device: Device):
-        # define vendor and path to the configuration file
+        """Define vendor and path to the configuration file"""
+
         if device.hw.PC:
             return "/etc/frr/frr.conf"
 
     def reload(self, _) -> str:
-        # define action which should be done in case of configuration file changes
+        """Define action which should be done in case of configuration file changes"""
+
         return "sudo /etc/init.d/frr reload"
 
     def run(self, device: Device):
