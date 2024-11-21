@@ -52,8 +52,8 @@ class Bgp(PartialGenerator):
                 yield "neighbor", group.group_name, "peer-group"
 
             for peer in mesh_data.peers:
-                yield "neighbor", peer.addr.upper(), "remote-as", peer.remote_as
-                yield "neighbor", peer.addr.upper(), "peer-group", peer.group_name
+                yield "neighbor", peer.addr, "remote-as", peer.remote_as
+                yield "neighbor", peer.addr, "peer-group", peer.group_name
 
             if device.device_role.name == "ToR":
                 yield "maximum-paths 16"
@@ -79,7 +79,7 @@ class Bgp(PartialGenerator):
 
                 for peer in mesh_data.peers:
                     if "ipv4_unicast" in peer.families:
-                        yield "neighbor", peer.addr.upper(), "activate"
+                        yield "neighbor", peer.addr, "activate"
 
     def acl_arista(self, _: Device) -> str:
         """ACL for Arista devices"""
