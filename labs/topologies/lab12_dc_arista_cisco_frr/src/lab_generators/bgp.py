@@ -44,7 +44,7 @@ class Bgp(PartialGenerator):
 
         if not asnum or not rid:
             return
-        with self.block("router bgp", asnum):
+        with (self.block("router bgp", asnum)):
             yield "bgp router-id", rid
             yield "bgp log-neighbor-changes"
 
@@ -60,9 +60,11 @@ class Bgp(PartialGenerator):
 
             with self.block("address-family ipv4"):
 
-                if mesh_data.global_options and mesh_data.global_options.ipv4_unicast and mesh_data.global_options.ipv4_unicast.redistributes:
+                if mesh_data.global_options and mesh_data.global_options.ipv4_unicast and \
+                        mesh_data.global_options.ipv4_unicast.redistributes:
                     for redistribute in mesh_data.global_options.ipv4_unicast.redistributes:
-                        yield "redistribute", redistribute.protocol, "" if not redistribute.policy else f"route-map {redistribute.policy}"
+                        yield "redistribute", redistribute.protocol, "" \
+                            if not redistribute.policy else f"route-map {redistribute.policy}"
 
                 for group in bgp_groups(mesh_data):
                     if "ipv4_unicast" in group.families:
@@ -80,7 +82,6 @@ class Bgp(PartialGenerator):
                         yield "neighbor", peer.addr.upper(), "activate"
                     else:
                         yield "no neighbor", peer.addr.upper(), "activate"
-
 
     def acl_arista(self, _: Device) -> str:
         """ACL for Arista devices"""

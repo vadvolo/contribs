@@ -1,6 +1,6 @@
 from annet.bgp_models import Redistribute
-from annet.mesh import (DirectPeer, GlobalOptions, MeshRulesRegistry,
-                        MeshSession)
+from annet.mesh import DirectPeer, GlobalOptions, MeshRulesRegistry, MeshSession
+
 
 registry = MeshRulesRegistry(match_short_name=True)
 

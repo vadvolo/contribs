@@ -5,9 +5,14 @@ from annet.generators import Entire
 from annet.mesh.executor import MeshExecutionResult
 from annet.storage import Device
 
-from .helpers.router import (AutonomusSystemIsNotDefined, bgp_asnum,
-                             bgp_groups, bgp_mesh, is_drained_device,
-                             router_id)
+from .helpers.router import (
+    AutonomusSystemIsNotDefined,
+    bgp_asnum,
+    bgp_groups,
+    bgp_mesh,
+    is_drained_device,
+    router_id,
+)
 
 
 class Frr(Entire):

@@ -28,6 +28,8 @@ class Bgp(PartialGenerator):
             neighbor
             redistribute connected
             maximum-paths
+            address-family
+                ~ %global=1
         """
 
     def run_cisco(self, device: Device):
@@ -42,33 +44,44 @@ class Bgp(PartialGenerator):
 
         if not asnum or not rid:
             return
-        with self.block("router bgp", asnum):
+        with (self.block("router bgp", asnum)):
             yield "bgp router-id", rid
             yield "bgp log-neighbor-changes"
+
+            for group in bgp_groups(mesh_data):
+                yield "neighbor", group.group_name, "peer-group"
+
+            for peer in mesh_data.peers:
+                yield "neighbor", peer.addr.upper(), "remote-as", peer.remote_as
+                yield "neighbor", peer.addr.upper(), "peer-group", peer.group_name
 
             if device.device_role.name == "ToR":
                 yield "maximum-paths 16"
 
-            if mesh_data.global_options and mesh_data.global_options.ipv4_unicast and mesh_data.global_options.ipv4_unicast.redistributes:
-                for redistribute in mesh_data.global_options.ipv4_unicast.redistributes:
-                    yield "redistribute", redistribute.protocol, "" if not redistribute.policy else f"route-map {redistribute.policy}"
+            with self.block("address-family ipv4"):
 
-            for peer in mesh_data.peers:
-                # define peer group attrs
-                yield "neighbor", peer.group_name, "peer-group"
+                if mesh_data.global_options and mesh_data.global_options.ipv4_unicast and \
+                        mesh_data.global_options.ipv4_unicast.redistributes:
+                    for redistribute in mesh_data.global_options.ipv4_unicast.redistributes:
+                        yield "redistribute", redistribute.protocol, "" \
+                            if not redistribute.policy else f"route-map {redistribute.policy}"
 
-                if peer.import_policy:
-                    yield "neighbor", peer.group_name, "route-map", peer.import_policy, "in"
-                if peer.export_policy:
-                    yield "neighbor", peer.group_name, "route-map", peer.export_policy, "out"
-                if peer.options.soft_reconfiguration_inbound:
-                    yield "neighbor", peer.group_name, "soft-reconfiguration inbound"
-                if peer.options.send_community:
-                    yield "neighbor", peer.group_name, "send-community both"
+                for group in bgp_groups(mesh_data):
+                    if "ipv4_unicast" in group.families:
+                        if group.import_policy:
+                            yield "neighbor", group.group_name, "route-map", group.import_policy, "in"
+                        if group.export_policy:
+                            yield "neighbor", group.group_name, "route-map", group.export_policy, "out"
+                        if group.soft_reconfiguration_inbound:
+                            yield "neighbor", group.group_name, "soft-reconfiguration inbound"
+                        if group.send_community:
+                            yield "neighbor", group.group_name, "send-community both"
 
-                # define peers specific attrs
-                yield "neighbor", peer.addr, "peer-group", peer.group_name
-                yield "neighbor", peer.addr, "remote-as", peer.remote_as
+                for peer in mesh_data.peers:
+                    if "ipv4_unicast" in peer.families:
+                        yield "neighbor", peer.addr.upper(), "activate"
+                    else:
+                        yield "no neighbor", peer.addr.upper(), "activate"
 
     def acl_arista(self, _: Device) -> str:
         """ACL for Arista devices"""
@@ -111,4 +124,5 @@ class Bgp(PartialGenerator):
 
             with self.block("address-family ipv4"):
                 for group in bgp_groups(mesh_data):
-                    yield "neighbor", group.group_name, "activate"
+                    if "ipv4_unicast" in group.families:
+                        yield "neighbor", group.group_name, "activate"
