@@ -80,8 +80,6 @@ class Bgp(PartialGenerator):
                 for peer in mesh_data.peers:
                     if "ipv4_unicast" in peer.families:
                         yield "neighbor", peer.addr.upper(), "activate"
-                    else:
-                        yield "no neighbor", peer.addr.upper(), "activate"
 
     def acl_arista(self, _: Device) -> str:
         """ACL for Arista devices"""
