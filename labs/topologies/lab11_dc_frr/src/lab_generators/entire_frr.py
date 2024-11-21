@@ -52,11 +52,6 @@ class Frr(Entire):
             if description:
                 yield " description", description
 
-            # structure of ip addresses looks like:
-            #  ip_addresses=[
-            #       IpAddress(family=IpFamily(value=4,label='IPv4'),address='10.0.0.1/32'),
-            #       IpAddress(family=IpFamily(value=6,label='IPv6'),address='2001:db8::1/128')
-            #  ],
             if interface.ip_addresses:
                 for ip in interface.ip_addresses:
                     if ip.family.value == 4:

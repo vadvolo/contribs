@@ -27,11 +27,6 @@ class IpAddresses(PartialGenerator):
         bgp_mesh(device)
         for interface in device.interfaces:
             if interface.ip_addresses:
-                # structure of ip addresses looks like:
-                #  ip_addresses=[
-                #       IpAddress(family=IpFamily(value=4,label='IPv4'),address='10.0.0.1/32'),
-                #       IpAddress(family=IpFamily(value=6,label='IPv6'),address='2001:db8::1/128')
-                #  ],
                 with self.block(f"interface {interface.name}"):
                     for ip_address in interface.ip_addresses:
                         if ip_address.family.value == 4:
@@ -54,11 +49,6 @@ class IpAddresses(PartialGenerator):
         bgp_mesh(device)
         for interface in device.interfaces:
             if interface.ip_addresses:
-                # structure of ip addresses looks like:
-                #  ip_addresses=[
-                #       IpAddress(family=IpFamily(value=4,label='IPv4'),address='10.0.0.1/32'),
-                #       IpAddress(family=IpFamily(value=6,label='IPv6'),address='2001:db8::1/128')
-                #  ],
                 with self.block(f"interface {interface.name}"):
                     for ip_address in interface.ip_addresses:
                         if ip_address.family.value == 4:
