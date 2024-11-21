@@ -32,6 +32,9 @@ RUN go build -o /usr/local/bin/netsshsetup
 # Copy annet config
 COPY config.yaml /config.yaml
 
+# copy addons for /etc/hosts
+COPY hosts_addons /hosts_addons
+
 # Set final workdir and default command
 WORKDIR "/"
 CMD ["tail", "-f", "/dev/null"]

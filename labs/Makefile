@@ -38,6 +38,7 @@ lab00: services_stop check_cisco_image unpack_cisco_image
 	@cp ./topologies/lab00_basic_cisco/docker-compose.override.yml ./netbox-docker/docker-compose.override.yml && \
 	cd netbox-docker/ && docker compose up -d && cd .. && \
 	docker exec --user root netbox /opt/netbox/netbox/manage.py loaddata /home/ubuntu/src/netbox-dump.json && \
+	docker exec -u root -t -i annet bash -c "cat /hosts_addons >> /etc/hosts" && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.101 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.102 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.103 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
@@ -52,6 +53,7 @@ lab01: services_stop
 	$(SUDO) find operational_configs -mindepth 1 -not -name '.gitkeep' -delete || true && \
 	cp -r default_configs/* operational_configs/ && \
 	cd ../../netbox-docker/ && docker compose up -d --build && cd .. && \
+	docker exec -u root -t -i annet bash -c "cat /hosts_addons >> /etc/hosts" && \
 	docker exec --user root netbox /opt/netbox/netbox/manage.py loaddata /home/ubuntu/src/netbox-dump.json && \
 	eval "docker exec -u root -t -i annet /bin/bash"
 
@@ -59,6 +61,7 @@ lab10: services_stop check_cisco_image unpack_cisco_image
 	@cp ./topologies/lab10_dc_cisco/docker-compose.override.yml ./netbox-docker/docker-compose.override.yml && \
 	cd netbox-docker/ && docker compose up -d && cd .. && \
 	docker exec --user root netbox /opt/netbox/netbox/manage.py loaddata /home/ubuntu/src/netbox-dump.json && \
+	docker exec -u root -t -i annet bash -c "cat /hosts_addons >> /etc/hosts" && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.101 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.102 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.103 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
@@ -73,6 +76,7 @@ lab11: services_stop
 	cp -r default_configs/* operational_configs/ && \
 	cd ../../netbox-docker/ && docker compose up -d --build && cd .. && \
 	docker exec --user root netbox /opt/netbox/netbox/manage.py loaddata /home/ubuntu/src/netbox-dump.json && \
+	docker exec -u root -t -i annet bash -c "cat /hosts_addons >> /etc/hosts" && \
 	eval "docker exec -u root -t -i annet /bin/bash"
 
 lab12: services_stop check_cisco_image unpack_cisco_image
@@ -82,6 +86,7 @@ lab12: services_stop check_cisco_image unpack_cisco_image
 	cp -r default_configs/* operational_configs/ && \
 	cd ../../netbox-docker/ && docker compose up -d --build && cd .. && \
 	docker exec --user root netbox /opt/netbox/netbox/manage.py loaddata /home/ubuntu/src/netbox-dump.json && \
+	docker exec -u root -t -i annet bash -c "cat /hosts_addons >> /etc/hosts" && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.103 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
 	docker exec -u root -t -i annet netsshsetup -a 172.20.0.105 -b ios -l annet -p annet -P telnet -v cisco --ipdomain nh.com && \
 	eval "docker exec -u root -t -i annet /bin/bash"

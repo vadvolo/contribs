@@ -18,7 +18,7 @@ Author:
 
 ### Preparation
 
-Before you start, please put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `lab/vm_images` directory.
+Before you start, please put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `../vm_images` directory.
 The image is subject to a license agreement, so it cannot be distributed in the repository.
 
 ### Topology

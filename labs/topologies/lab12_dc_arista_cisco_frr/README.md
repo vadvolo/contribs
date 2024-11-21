@@ -17,12 +17,12 @@ Author:
 
 ### Preparation
 
-1. Put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `lab/vm_images` directory.  
+1. Put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `../vm_images` directory.  
    The image is subject to a license agreement, so it cannot be distributed in the repository.
 2. Prepare docker image for Arista EOS.  
    **How to get Arista image**  
    1. Log in or register at [Arista.com](https://www.arista.com/en/login). Make sure you are not using some generic domains like gmail.
-   2. Download the `cEOS64-lab-4.33.0F.tar.xz` from [web-site](https://www.arista.com/en/support/software-download) to `lab/vm_images`.
+   2. Download the `cEOS64-lab-4.33.0F.tar.xz` from [web-site](https://www.arista.com/en/support/software-download) to `../vm_images`.
    3. Prepare docker image: `docker image import cEOS64-lab-4.33.0F.tar.xz arista-ceos:4.33.0F`
    ```bash
    docker image import vm_images/cEOS64-lab-4.33.0F.tar  arista-ceos:4.33.0F --platform linux/amd64
