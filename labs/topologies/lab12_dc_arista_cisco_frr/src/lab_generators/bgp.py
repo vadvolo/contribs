@@ -44,7 +44,7 @@ class Bgp(PartialGenerator):
 
         if not asnum or not rid:
             return
-        with (self.block("router bgp", asnum)):
+        with self.block("router bgp", asnum):
             yield "bgp router-id", rid
             yield "bgp log-neighbor-changes"
 
