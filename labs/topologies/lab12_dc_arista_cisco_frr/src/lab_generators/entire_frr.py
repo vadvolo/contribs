@@ -21,15 +21,18 @@ class Frr(Entire):
     TAGS = ["frr"]
 
     def path(self, device: Device):
-        # define vendor and path to the configuration file
+        """Define vendor and path to the configuration file"""
+
         if device.hw.PC:
             return "/etc/frr/frr.conf"
 
     def reload(self, _) -> str:
-        # define action which should be done in case of configuration file changes
+        """Define action which should be done in case of configuration file changes"""
+
         return "sudo /etc/init.d/frr reload"
 
     def run(self, device: Device):
+        """Generate configuration file content"""
 
         mesh_data: MeshExecutionResult = bgp_mesh(device)
 
@@ -51,12 +54,12 @@ class Frr(Entire):
 
             if description:
                 yield " description", description
+
             if interface.ip_addresses:
                 for ip in interface.ip_addresses:
                     if ip.family.value == 4:
                         yield " ip address", ip.address
-                    if ip.family.value == 6:
-                        yield " ipv6 address", ip.address
+
             yield "exit"
             yield ""
 
@@ -85,8 +88,9 @@ class Frr(Entire):
                     yield "  redistribute", redistribute.protocol, "" if not redistribute.policy else f"route-map {redistribute.policy}"
 
             for group in bgp_groups(mesh_data):
-                yield "  neighbor", group.group_name, "route-map", group.import_policy, "in"
-                yield "  neighbor", group.group_name, "route-map", group.export_policy, "out"
+                if "ipv4_unicast" in group.families:
+                    yield "  neighbor", group.group_name, "route-map", group.import_policy, "in"
+                    yield "  neighbor", group.group_name, "route-map", group.export_policy, "out"
 
             if device.device_role.name == "ToR":
                 yield "  maximum-paths 16"

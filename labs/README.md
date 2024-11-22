@@ -42,11 +42,11 @@ This steps are the same for all the labs.
    brew install make      # MacOS
    ```
 
-3. Some labs require OS images (i.e. Arista EOS). Please download it according to Lab Guide and put to `../vm_images` directory. 
+3. Some labs require OS images (i.e. Arista EOS). Please download it according to Lab Guide and put to `vm_images` directory. 
 
 4. Clone this repository:
    ```bash
-   git clone https://github.com/annetutil/annet.git
+   git clone https://github.com/annetutil/contribs.git
    ```
 
    Navigate to the lab folder:

@@ -35,7 +35,7 @@ Author:
 
 ### Preparation
 
-1. Before you start, please put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `lab/vm_images` directory.
+1. Before you start, please put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `../vm_images` directory.
    The image is subject to a license agreement, so it cannot be distributed in the repository.
 
 2. Install Docker and Docker Compose on your device
@@ -75,7 +75,7 @@ make build
 
 **Step 2. Start the lab**
 
-> NOTE: Do not forget to put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `lab/vm_images` directory.
+> NOTE: Do not forget to put Cisco IOS image `c7200-jk9s-mz.124-13a.bin` into `../vm_images` directory.
 
 ```bash
 make lab00

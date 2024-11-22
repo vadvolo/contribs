@@ -27,24 +27,12 @@ class IpAddresses(PartialGenerator):
         bgp_mesh(device)
         for interface in device.interfaces:
             if interface.ip_addresses:
-                count_ipv4 = 0
-                count_ipv6 = 0
                 with self.block(f"interface {interface.name}"):
-                    # to deduplicate ip addresses on the interface, it looks like a bug in mesh
-                    ip_addr_set: set[tuple[str, int]] = set()
                     for ip_address in interface.ip_addresses:
-                        if not (ip_address.address, ip_address.family.value,) in ip_addr_set:
-                            ip_addr_set.add((ip_address.address, ip_address.family.value,))
-                            if ip_address.family.value == 4:
-                                ip_addr: str = str(IPv4Address(ip_address.address.split("/")[0]))
-                                ip_mask: str = str(IPv4Network(ip_address.address, strict=False).netmask)
-                                secondary: str = "" if count_ipv4 == 0 else "secondary"
-                                yield "ip address", ip_addr, ip_mask, secondary
-                                count_ipv4 += 1
-                            elif ip_address.family.value == 6:
-                                secondary = "" if count_ipv6 == 0 else "secondary"
-                                yield "ipv6 address", ip_address.address, secondary
-                                count_ipv6 += 1
+                        if ip_address.family.value == 4:
+                            ip_addr: str = str(IPv4Address(ip_address.address.split("/")[0]))
+                            ip_mask: str = str(IPv4Network(ip_address.address, strict=False).netmask)
+                            yield "ip address", ip_addr, ip_mask
 
     def acl_arista(self, _: Device):
         """ACL for Arista devices"""
@@ -61,19 +49,7 @@ class IpAddresses(PartialGenerator):
         bgp_mesh(device)
         for interface in device.interfaces:
             if interface.ip_addresses:
-                count_ipv4 = 0
-                count_ipv6 = 0
                 with self.block(f"interface {interface.name}"):
-                    # to deduplicate ip addresses on the interface, it looks like a bug in mesh
-                    ip_addr_set: set[tuple[str, int]] = set()
                     for ip_address in interface.ip_addresses:
-                        if not (ip_address.address, ip_address.family.value,) in ip_addr_set:
-                            ip_addr_set.add((ip_address.address, ip_address.family.value,))
-                            if ip_address.family.value == 4:
-                                secondary: str = "" if count_ipv4 == 0 else "secondary"
-                                yield "ip address", ip_address.address, secondary
-                                count_ipv4 += 1
-                            elif ip_address.family.value == 6:
-                                secondary = "" if count_ipv6 == 0 else "secondary"
-                                yield "ipv6 address", ip_address.address, secondary
-                                count_ipv6 += 1
+                        if ip_address.family.value == 4:
+                            yield "ip address", ip_address.address
