@@ -35,6 +35,9 @@ COPY config.yaml /config.yaml
 # copy addons for /etc/hosts
 COPY hosts_addons /hosts_addons
 
+# copt ssh client config
+COPY ssh_client_config /root/.ssh/config
+
 # Set final workdir and default command
 WORKDIR "/"
 CMD ["tail", "-f", "/dev/null"]
