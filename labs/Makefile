@@ -30,7 +30,7 @@ check_cisco_image:
 	@if !(ls ./vm_images/*.bin 1> /dev/null 2>&1); then echo "\n\n !!! ./vm_images doesn't have any images !!!\n" && exit 1; fi
 
 unpack_cisco_image:
-	@cd vm_images && find . -name '*.bin' -exec sh -c 'f=$$(echo $$1 | cut -d "." -f 2,3); unzip -p ".$$f.bin" > ".$$f.image"' _ {} \; && cd ..
+	@cd vm_images && find . -name '*.bin' -exec sh -c 'f=$$(echo $$1 | sed -e "s/\.[^.]*$$//"); unzip -p "$$f.bin" > "$$f.image"' _ {} \; && cd ..
 
 # Build and destroy architecture
 

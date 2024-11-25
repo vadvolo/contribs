@@ -51,7 +51,7 @@ This steps are the same for all the labs.
 
    Navigate to the lab folder:
    ```bash
-   cd annetutils/contribs/labs
+   cd contribs/labs
    ```
 
 5. Build Annet and Netbox Docker images:
@@ -59,10 +59,10 @@ This steps are the same for all the labs.
    make build
    ```
 
-   After some changes you have to run `make rebuild`. It doesn't relate to changes in generators and mesh.
+   After making some changes, you have to run `make rebuild`. This is not related to changes in the generators or mesh.
 
 6. Run the Lab
-   Now you can choose which scenario you want to run. To start a lab you need to run 
+   Now you can choose which scenario you want to run. To start a lab you need to run:
    ```bash
    make labXX
    ```
