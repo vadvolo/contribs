@@ -55,7 +55,7 @@ Author:
 If it was not done yet, build Netbox and Annet docker images:
 
 ```bash
-cd annetutils/contribs/labs
+cd contribs/labs
 make build
 ```
 

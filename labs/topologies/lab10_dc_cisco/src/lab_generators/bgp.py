@@ -29,7 +29,9 @@ class Bgp(PartialGenerator):
             redistribute connected
             maximum-paths
             address-family
-                ~ %global=1
+                neighbor
+                redistribute connected
+                maximum-paths
         """
 
     def run_cisco(self, device: Device):
