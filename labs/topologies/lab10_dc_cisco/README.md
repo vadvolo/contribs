@@ -117,7 +117,7 @@ BGP neighbors also depend on the connections in Netbox, they are generated only 
 If it was not done yet, build Netbox and Annet docker images:
 
 ```bash
-cd annetutils/contribs/labs
+cd contribs/labs
 make build
 ```
 

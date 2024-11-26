@@ -69,7 +69,7 @@ In this lab, generators are organized within the `./src/lab_generators` director
 **Step 1. Build Annet and Netbox Docker images**
 
 ```bash
-cd annetutils/contribs/labs
+cd contribs/labs
 make build
 ```
 

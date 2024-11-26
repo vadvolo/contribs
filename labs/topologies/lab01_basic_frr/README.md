@@ -42,7 +42,7 @@ We can leverage this fact to manage the routing configuration in a server-like m
 The generator in this example configures interface descriptions, IP addresses and BGP sessions between FRR routers.
 All the parameters are defined by connections in Netbox.
 
-- [frr generator src](./src/lab_generators/f.py)
+- [frr generator src](./src/lab_generators/frr.py)
 
 ---
 
@@ -51,7 +51,7 @@ All the parameters are defined by connections in Netbox.
 **Step 1. If it was not done yet, build Netbox and Annet docker images**
 
 ```bash
-cd annetutils/contribs/labs
+cd contribs/labs
 make build
 ```
 
