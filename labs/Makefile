@@ -4,6 +4,8 @@ SUDO := $(shell if [ "$$(uname -s)" = "Linux" ] && [ -x "$$(command -v sudo)" ] 
 
 ### Services (annet and netbox) control
 
+build: clean build_annet build_netbox
+
 build_annet:
 	@cd ./annet && \
 	cp -r ../scripts/netsshsetup ./netsshsetup && \
@@ -17,11 +19,10 @@ build_netbox:
 	@sed -i.bak 's/0s/00s/g' ./netbox-docker/docker-compose.yml
 	@cd ./netbox-docker && docker compose build --no-cache && cd ..
 
-build: build_annet build_netbox
-
-rebuild:
-	rm -rf netbox-docker || true && \
-	$(MAKE) build
+clean:
+	@cd ./netbox-docker 2>/dev/null && docker compose down -v && cd .. || echo "Directory 'netbox-docker' does not exist, skipping removal..."
+	@docker rmi annet 2>/dev/null || echo "Docker image 'annet' does not exist, skipping removal..."
+	@rm -rf netbox-docker 2>/dev/null || true
 
 services_stop:
 	@cd ./netbox-docker && docker compose down -v && cd ..

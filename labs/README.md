@@ -22,7 +22,7 @@ Table of contents:
 
 - Netbox url: http://localhost:8000/
 - Netbox login/password: `annet/annet`
-- Device telnet and ssh login/password: `annet/annet`  
+- Device telnet and ssh login/password: `annet/annet`
 
 ## Lab installation
 
@@ -46,7 +46,7 @@ This steps are the same for all the labs.
    brew install make      # MacOS
    ```
 
-3. Some labs require OS images (i.e. Arista EOS). Please download it according to Lab Guide and put to `vm_images` directory. 
+3. Some labs require OS images (i.e. Arista EOS). Please download it according to Lab Guide and put to `vm_images` directory.
 
 4. Clone this repository:
    ```bash
@@ -63,14 +63,14 @@ This steps are the same for all the labs.
    make build
    ```
 
-   After making some changes, you have to run `make rebuild`. This is not related to changes in the generators or mesh.
+   After making any changes, you have to run `make build` again. This is not related to changes in the generators or mesh.
 
 6. Run the Lab
    Now you can choose which scenario you want to run. To start a lab you need to run:
    ```bash
    make labXX
    ```
-   where `XX` is an index of the lab.  
+   where `XX` is an index of the lab.
    For example, `make lab00` will start `lab00. Basic Cisco Scenario`.
 
    After this step you will be automatically logged in to annet container as a root. You can also login manually by `docker exec -u root -t -i annet /bin/bash`.
