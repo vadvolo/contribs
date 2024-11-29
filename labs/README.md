@@ -36,6 +36,10 @@ This steps are the same for all the labs.
      - [Mac](https://docs.docker.com/desktop/install/mac-install/)
      - [Windows](https://docs.docker.com/desktop/install/windows-install/)
 
+
+   > **Important**
+   We strongly suggest following the instructions because the labs require the latest versions of the Docker software.
+
 2. Install `make` utility:
    ```bash
    sudo apt install make  # Linux
