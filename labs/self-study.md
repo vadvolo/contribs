@@ -28,3 +28,28 @@ Mesh описывает соединения между устройствами
 - `peers` определяются в функции с декоратором `direct`. 
 
 Эти функции определены в модуле `mesh_view`. Параметры редистрибуции задаются в `global_options`.
+
+**Результат:**
+``diff
+# -------------------- tor-1-1.nh.com.cfg --------------------
++ ip route 192.168.7.0 255.255.255.0 Null0
++ route-map IMPORT_STATIC permit 10
++   set community 65000:1
+  router bgp 65111
+    address-family ipv4
++     redistribute static route-map IMPORT_STATIC
+# -------------------- tor-1-2.nh.com.cfg --------------------
++ ip route 192.168.8.0 255.255.255.0 Null0
++ route-map IMPORT_STATIC permit 10
++   set community 65000:1
+  router bgp 65112
+    address-family ipv4
++     redistribute static route-map IMPORT_STATIC
+# -------------------- tor-1-3.nh.com.cfg --------------------
++ ip route 192.168.9.0 255.255.255.0 Null0
++ route-map IMPORT_STATIC permit 10
++   set community 65000:1
+  router bgp 65113
+    address-family ipv4
++     redistribute static route-map IMPORT_STATIC
+```
